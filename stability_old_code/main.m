@@ -64,7 +64,9 @@ k2=alp^2+beta^2;
 [y,DM] = chebdif(nosmod+2,2);
 
 %%% scale the differentiation matrices if area is [0, ylen]
-if iflow==1; ylen=2; end
+if iflow==1
+  ylen=2;
+end
 d1=2/ylen; d2=d1*d1; d3=d1*d2; d4=d1*d3;
 D1=DM(:,:,1)*d1;    
 D2=DM(:,:,2)*d2;    
@@ -125,16 +127,16 @@ imaglow=-0.5;
 figure(1),clf; 
 plot(gg(:,1),gg(:,2),'k-','Linewidth',1.2);
 %axis ([0 100 1 30])
- set(gca,'YScale','log')
- set(gca,'XScale','lin')
-  xlabel('t')
- ylabel('G(t)')
- ax=gca;
-ax.FontSize=14;
+set(gca,'YScale','log')
+set(gca,'XScale','lin')
+xlabel('t')
+ylabel('G(t)')
+ax=gca;
+set (ax, "FontSize", 14);
 %legend([a b],'Experiments','Simulations')
-ax.LabelFontSizeMultiplier=1.2;
 box on
 grid on
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
 %%% Compute the Optimal Response
