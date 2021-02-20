@@ -1,4 +1,4 @@
-function OSS=OSSmat(nosmod,D1,D2,d4,alp,beta,R,u,up,upp)
+function OSS=OSS(nosmod,D1,D2,d4,alp,beta,R,u,up,upp)
 
 % Compute the Orr-Somerfeld-Squire operator for the homogeneous problem.
 
