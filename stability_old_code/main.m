@@ -5,7 +5,7 @@
 
 % nosmod    = number of Orr-Sommerfeld modes
 % R         = Reynolds number
-% alp       = alpha (streamwise wave number)
+% alpha     = alpha (streamwise wave number)
 % beta      = beta  (spanwise wave number)
 % iflow     = type of flow  (Poiseuille=1, Couette=2)  
 % nosmod    = total number of modes for normal velocity
@@ -45,15 +45,9 @@ Nprof=99; Lprof=39;
 %%% general variables
 R=25;
 nosmod=100;
-alp=1;
-beta=1;
-k2=alp^2+beta^2;
-
-% $$$ R=1000;
-% $$$ nosmod=100;
-% $$$ alp=0.;
-% $$$ beta=2.;
-% $$$ k2=alp^2+beta^2;
+alpha=1;
+beta=0;
+k2=alpha^2+beta^2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
@@ -109,7 +103,7 @@ end
 %%% only
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-A=OSS(nosmod,D1,D2,d4,alp,beta,R,u,up,upp);
+A=OSS(nosmod,D1,D2,d4,alpha,beta,R,u,up,upp);
 
 
 %%% Get the energy matrix for inner points 
