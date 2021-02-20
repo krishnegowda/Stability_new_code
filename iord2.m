@@ -1,10 +1,4 @@
-
-
-
-
-
-
-    function [xs,es]=iord2(d);
+function [xs,es]=iord2(d);
 %
 % This function computes the eigenvalues of a matrix d and 
 % orders the eigenvalues so that the imaginary parts are 
