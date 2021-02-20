@@ -1,0 +1,8 @@
+this code is meant for use in part 3 of the phd courses.
+I have implemented a version that combines channel and boundary 
+layer. It uses chebdif and not the expantion coefficient form as 
+schmid has used. The energy is computed by INTweights and ENER. 
+I modified Schmids nlize and called it normalize, also I modified 
+qbmat and called it QBmat. These changes were done to satisfy the 
+form that I am used to, and which is tested in cooperation with 
+the chebdif package. Otherwise the optimal function is unaltered.
