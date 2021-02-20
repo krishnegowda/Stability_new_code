@@ -26,7 +26,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%  set the flow type:
-%%%  iflow=1 is poiseuille, iflow=2 is blasius
+%%%  iflow=1 is Poiseuille, iflow=2 is Couette
 iflow=2;
 
 %%% time parameters for transient growth
@@ -62,6 +62,9 @@ k2=alpha^2+beta^2;
 %%% scale the differentiation matrices if area is [0, ylen]
 if iflow==1
   ylen=2;
+  yphys = y;
+elseif iflow == 2
+  yphys = 0.5*ylen*(y+1);
 end
 d1=2/ylen; d2=d1*d1; d3=d1*d2; d4=d1*d3;
 D1=DM(:,:,1)*d1;    
@@ -119,7 +122,7 @@ M=ENER(D1,IWT,k2,nosmod);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 imaglow=-0.5; 
 %imaglow=-inf;
-[flowin,flowot,gg]=optimal(A,T,M,k2,iflag,imaglow);
+[flowin,flowout,gg]=optimal(A,T,M,k2,iflag,imaglow);
 figure(1),clf; 
 plot(gg(:,1),gg(:,2),'k-','Linewidth',1.2);
 %axis ([0 100 1 30])
@@ -133,6 +136,12 @@ set (ax, "FontSize", 14);
 box on
 grid on
 
+% plot initial and final flows
+figure(2);
+plotflow(y, flowin);
+figure(3);
+plotflow(y, flowout);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
 %%% Compute the Optimal Response
@@ -140,7 +149,13 @@ grid on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 iflag=1;
-[flowin,flowot,or]=opt_response(A,omega,M,k2,iflag,imaglow);
-figure(2); semilogy(or(:,1),or(:,2));grid on
- xlabel('t')
- ylabel('G(t)')
+[flowin,flowout,or]=opt_response(A,omega,M,k2,iflag,imaglow);
+figure(6); semilogy(or(:,1),or(:,2));grid on
+xlabel('f')
+ylabel('R(f)')
+
+% plot forcing and response
+figure(7);
+plotflow(y, flowin);
+figure(7);
+plotflow(y, flowout);
