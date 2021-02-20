@@ -63,15 +63,18 @@
     % Phase 4: Compute the time for the maximum growth using 
     % the built-in Matlab routine 'fmin'
     
-    if iflag==1,
+    ts = 0;
+    tf = T;
+    
+    if iflag==1
+      % this should be done with numerical range instead:
+      % we want to know if there can be initial growth or if everything decays
       gcheck=maxer(1/100); 
       gcheck=gcheck^2;
       if gcheck<1,
         tformax=0;
         mgrowth=1;
       else
-        ts=T(1); 
-        tf=T(2);
 	
        %%% options for the optimal control using fminbnd,
        %%% modified by 2004.08.10 Espen in order to match
@@ -112,8 +115,9 @@
     flowin=sqrt(2*ak2)*xu*invF*V(:,1);
     flowot=sqrt(2*ak2)*xu*invF*U(:,1);
     
-    for i=1:40,
-      tid = ts + (tf-ts)/39*(i-1);
+    ntimes = 80;
+    for i=1:ntimes,
+      tid = ts + (tf-ts)*(i-1)/(ntimes-1);
       gg(i,2) = norm(expm(tid*qb))^2;
       gg(i,1) = tid;
     end 

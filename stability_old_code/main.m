@@ -30,7 +30,9 @@
 iflow=2;
 
 %%% time parameters for transient growth
-iflag=1; Tmin=0.1; Tmax=100;T=[Tmin Tmax];
+iflag=1; % find the time for maximal growth
+T = 100;
+
 %iflag=2; T=40;
 %iflag=2 to have the initial and final optimal
 
