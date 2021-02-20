@@ -7,7 +7,7 @@
 % R         = Reynolds number
 % alpha     = alpha (streamwise wave number)
 % beta      = beta  (spanwise wave number)
-% iflow     = type of flow  (Poiseuille=1, Couette=2)  
+% iflow     = type of flow  (Poiseuille=1, Couette=2, Blasius=3)
 % nosmod    = total number of modes for normal velocity
 % iflag     = 
 %             iflag = 1: compute the maximum growth and 
@@ -60,11 +60,11 @@ k2=alpha^2+beta^2;
 [y,DM] = chebdif(nosmod+2,2);
 
 %%% scale the differentiation matrices if area is [0, ylen]
-if iflow==1
-  ylen=2;
-  yphys = y;
-elseif iflow == 2
+if iflow == 3
   yphys = 0.5*ylen*(y+1);
+else
+  ylen = 2;
+  yphys = y;
 end
 d1=2/ylen; d2=d1*d1; d3=d1*d2; d4=d1*d3;
 D1=DM(:,:,1)*d1;    
@@ -79,10 +79,14 @@ D2=DM(:,:,2)*d2;
 %%% generate profiles
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-if (iflow==2)   
-  u=1-y.^2;
-  up=-2*y;
-  upp=-2*ones(size(y));
+if (iflow==1)
+  u   = 1-y.^2;
+  up  = -2*y;
+  upp = -2*ones(size(y));
+elseif (iflow==2)
+  u = y;
+  up = ones(size(y));
+  upp = zeros(size(y));
 else  
   %%% computing the similarity solution
   [yfsc,fprim,g]=FSCprof(Nprof,Lprof,m);     
@@ -138,9 +142,9 @@ grid on
 
 % plot initial and final flows
 figure(2);
-plotflow(y, flowin);
+plotflow(yphys, flowin);
 figure(3);
-plotflow(y, flowout);
+plotflow(yphys, flowout);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%
@@ -156,6 +160,6 @@ ylabel('R(f)')
 
 % plot forcing and response
 figure(7);
-plotflow(y, flowin);
+plotflow(yphys, flowin);
 figure(7);
-plotflow(y, flowout);
+plotflow(yphys, flowout);
