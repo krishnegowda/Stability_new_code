@@ -116,30 +116,30 @@
 
     %PSEUDOSPECTRA: eigenvalues from perturbed matrix
     epsilon=1e-5;
-    figure(4);plot(eu,'*'); hold on; axis([-0.5 1 -1.5 .2])
-     for i=1:100,
+    figure(5);plot(eu,'*'); hold on; axis([-0.5 1 -1.5 .2])
+    for i=1:100,
        E=randn(size(A));
        ee=E/norm(E)*epsilon;%renormalise pert. to norm epsilon
        [xs,es]=iord2(ee+A);
        plot(es,'.g')%plot perturbed eigenvalues
        grid on
- axis ([0 1.2 -1.5 0.1])
- set(gca,'YScale','lin')
- set(gca,'XScale','lin')
- xlabel('\omega_{r}')
- ylabel('\omega_{i}')
+       axis ([0 1.2 -1.5 0.1])
+       set(gca,'YScale','lin')
+       set(gca,'XScale','lin')
+       xlabel('\omega_{r}')
+       ylabel('\omega_{i}')
     end
 
     
     %Resolvant norm: loop over values of c_i and c_r
     %If cr+i*ci close enough to an eigenvalue the program would stop
-    figure(3);plot(eu,'*'); hold on; axis([0 1 -1.5 .1])
+    figure(4);plot(eu,'*'); hold on; axis([0 1 -1.5 .1])
     cr=-0.43:.1:1.;
     ci=-1:.1:.2;
     for i=1:length(cr),
       for j=1:length(ci),
-	[qb,invF]=Rmat(M,xu,eu,cr(i)+sqrt(-1)*ci(j));
-	reno(i,j) = norm(qb);
+	      [qb,invF]=Rmat(M,xu,eu,cr(i)+sqrt(-1)*ci(j));
+	      reno(i,j) = norm(qb);
       end
     end
     level=[1 1.5 2 2.5 3 3.5 4];
