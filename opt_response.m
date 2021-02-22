@@ -1,5 +1,4 @@
-
-   function [flowin,flowot,gg]=opt_response(A,omega,M,ak2,iflag,imaglow);
+function [flowin,flowot,gg]=opt_response(A,omega,M,ak2,iflag,imaglow);
 %
 % This function computes the initial flow structure which 
 % achieves the maximum transient energy growth
@@ -15,6 +14,7 @@
 %                       
 %           iflag = 2:  compute the forcing profile
 %                       yielding maximum energy at frequency omega(2)
+%
 % OUTPUT 
 % flowin  =  optimal forcing
 %           flowin(1:Nos)         = normal velocity 
@@ -26,7 +26,15 @@
 %                                  
 %           flowot(Nos+1:Nos+Nsq) = normal vorticity 
 %                                  
- 
+
+% resolution
+neps = 100;
+nw_f = 80;
+nw_r = 30;
+nw_i = 30;
+% vertical limits for resolvent
+wimin = -1.;
+wimax = 0.2;
 
 % Phase 1: Compute eigenvalues and eigenfunctions of 
 % Orr-Sommerfeld matrix and sort in order of descending 
@@ -105,8 +113,8 @@
 
     omegas=omega(1);
     omegaf=omega(2);
-    for i=1:30,
-      om = omegas + (omegaf-omegas)/29*(i-1);
+    for i=1:nw_f
+      om = omegas + (omegaf-omegas)*(i-1)/(nw_f-1);
       [qb,invF]=Rmat(M,xu,eu,om);
       gg(i,2) = norm(qb);
       gg(i,1) = om;
@@ -116,14 +124,14 @@
 
     %PSEUDOSPECTRA: eigenvalues from perturbed matrix
     epsilon=1e-5;
-    figure(5);plot(eu,'*'); hold on; axis([-0.5 1 -1.5 .2])
-    for i=1:100,
+    figure(5);plot(eu,'*'); hold on; axis([omegas omegaf wimin wimax])
+    for i=1:neps,
        E=randn(size(A));
        ee=E/norm(E)*epsilon;%renormalise pert. to norm epsilon
        [xs,es]=iord2(ee+A);
        plot(es,'.g')%plot perturbed eigenvalues
        grid on
-       axis ([0 1.2 -1.5 0.1])
+       axis ([omegas omegaf wimin wimax])
        set(gca,'YScale','lin')
        set(gca,'XScale','lin')
        xlabel('\omega_{r}')
@@ -131,18 +139,19 @@
     end
 
     
-    %Resolvant norm: loop over values of c_i and c_r
+    %Resolvent norm: loop over values of c_i and c_r
     %If cr+i*ci close enough to an eigenvalue the program would stop
-    figure(4);plot(eu,'*'); hold on; axis([0 1 -1.5 .1])
-    cr=-0.43:.1:1.;
-    ci=-1:.1:.2;
+    figure(4);plot(eu,'*'); hold on; axis([omegas omegaf wimin wimax])
+    cr=linspace(omegas,omegaf, nw_r);
+    ci=linspace(wimin, wimax, nw_i);;
     for i=1:length(cr),
+      disp(['c_r = ', num2str(cr(i))]);
       for j=1:length(ci),
 	      [qb,invF]=Rmat(M,xu,eu,cr(i)+sqrt(-1)*ci(j));
 	      reno(i,j) = norm(qb);
       end
     end
-    level=[1 1.5 2 2.5 3 3.5 4];
+    level=[1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6];
     contour(cr,ci,log10(reno)')
 
 
