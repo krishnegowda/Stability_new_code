@@ -1,7 +1,4 @@
-
-
-
-     function a=maxres(om,M,xu,eu);
+function a=maxres(om,M,xu,eu);
 %
 % This function computes the norm of the matrix qb
 
