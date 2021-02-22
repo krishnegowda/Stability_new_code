@@ -58,7 +58,8 @@ f0=-(2*x(2:Nfsc)-2)*Lfsc/4-1.21.*(1-exp((x(2:Nfsc)-1)*Lfsc/2));
 c0=-(2*x(2:Nfsc)-2)*Lfsc/4-1.21.*(1-exp((x(2:Nfsc)-1)*Lfsc/2));
 
 %%%%  Compute Falkner-Skan Profile
-f=fsolve('fsfun',f0,[0,1e-14,1e-14]);
+options = struct("TolFun", [0,1e-14,1e-14]);
+f=fsolve('fsfun', f0, options);
 F=f;
 f=[0;f];
 
@@ -69,7 +70,7 @@ fprim=-2/Lfsc*(DMfsc(:,:,1)*f);
 y=(1-x(1:Nfsc)).*(Lfsc/2);
 
 %%%% Compute Cooke profile
-g=fsolve('cfun',c0,[0,1e-10,1e-10]);
+g=fsolve('cfun',c0,options);
 g=[0;g];
 
 %%%% Now normalize to give boundary layer thickness = 1

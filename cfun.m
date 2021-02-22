@@ -1,4 +1,4 @@
-function cfun=f(U)
+function cfun=cfun(U)
 %
 %
 %
