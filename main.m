@@ -26,8 +26,8 @@ close all;
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%params_poiseuille;
-params_blasius;
+params_poiseuille;
+%params_blasius;
 
 k2=alpha^2+beta^2;
 
@@ -107,8 +107,13 @@ M=ENER(D1,IWT,k2,nosmod);
 imaglow=-0.5; 
 %imaglow=-inf;
 [flowin,flowout,gg]=optimal(A,T,M,k2,iflag,imaglow);
+flowin = normalize(flowin, M);
+flowout = normalize(flowout, M);
 figure(1),clf; 
 plot(gg(:,1),gg(:,2),'k-','Linewidth',1.2);
+hold on;
+plot(gg(:,1), gg(:,3), 'b-');
+hold off;
 %axis ([0 100 1 30])
 set(gca,'YScale','log')
 set(gca,'XScale','lin')
@@ -119,6 +124,21 @@ set (ax, "FontSize", 14);
 %legend([a b],'Experiments','Simulations')
 box on
 grid on
+
+% plot vorticity and velocity
+figure(10);
+plot(gg(:,1), gg(:,4), 'b-', 'Linewidth', 1.2);
+hold on;
+plot(gg(:,1), gg(:,5), 'r-', 'Linewidth', 1.2);
+hold off;
+grid on;
+ylim([min(abs(gg(:, 4))) max(max(abs(gg(:, 4:5))))]);
+set(gca,'YScale','log')
+set(gca,'XScale','lin')
+xlabel('t')
+ylabel('G(t)')
+ax=gca;
+set (ax, "FontSize", 14);
 
 % plot initial and final flows
 figure(2);
