@@ -5,6 +5,7 @@ iflow=3;
 %%% time parameters for transient growth
 iflag=1; % find the time for maximal growth
 T = 300;
+ntimes_opt = 60;
 
 %iflag=2; T=40;
 %iflag=2 to have the initial and final optimal
