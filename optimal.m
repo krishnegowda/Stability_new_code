@@ -113,12 +113,29 @@ function [flowin,flowot,gg]=optimal(A,T,M,ak2,iflag,imaglow);
     %%%%%% states at time ts and tformax
     flowin=sqrt(2*ak2)*xu*invF*V(:,1);
     flowot=sqrt(2*ak2)*xu*invF*U(:,1);
+    flowin_modes = V(:,1);
     
     ntimes = 80;
+    gg = zeros(ntimes, 5);
     for i=1:ntimes,
       tid = ts + (tf-ts)*(i-1)/(ntimes-1);
-      gg(i,2) = norm(expm(tid*qb))^2;
       gg(i,1) = tid;
+      % max amplification
+      evol = expm(tid*qb);
+      gg(i,2) = norm(evol)^2;
+      % amplification with the optimal perturbation
+      flow = sqrt(2*ak2)*xu*invF*evol*flowin_modes;
+      gg(i,3) = (flow'*M*flow) / (flowin'*M*flowin);
+      % part of the energy in normal velocity vs normal vorticity
+      [m, ~] = size(xu);
+      mask1 = ones(m, 1);
+      mask2 = ones(m, 1);
+      mask1(m/2+1:end) = 0;
+      mask2(1:m/2) = 0;
+      flow1 = mask1 .* flow;
+      flow2 = mask2 .* flow;
+      gg(i,4) = (flow1'*M*flow1) / (flowin'*M*flowin);
+      gg(i,5) = (flow2'*M*flow2) / (flowin'*M*flowin);
     end 
     
 
