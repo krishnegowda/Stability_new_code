@@ -1,5 +1,4 @@
-
-   function [flowin,flowot,gg]=optimal(A,T,M,ak2,iflag,imaglow);
+function [flowin,flowot,gg]=optimal(A,T,M,ak2,iflag,imaglow);
 %
 % This function computes the initial flow structure which 
 % achieves the maximum transient energy growth
