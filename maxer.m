@@ -1,7 +1,4 @@
-
-
-
-     function a=maxer(t);
+function a=maxer(t);
 %
 % This function computes the norm of the matrix exponential 
 % of qb*t 

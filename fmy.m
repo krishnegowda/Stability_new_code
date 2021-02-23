@@ -1,5 +1,4 @@
-
-    function t=fmy(t1,t2,options);
+function t=fmy(t1,t2,options);
 % 
 %
 % This function uses the built-in function 'fminbnd' to find 

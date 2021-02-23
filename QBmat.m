@@ -1,5 +1,4 @@
-
-    function [qb,invF]=QBmat(M,xu,e)
+function [qb,invF]=QBmat(M,xu,e)
 %
 % This function computes the matrix  Q=-i*F*diag(e)*inv(F) 
 % which is used to compute the maximum transient growth 
