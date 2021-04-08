@@ -101,7 +101,7 @@ wimax = 0.2;
     [U,S,V]=svd(qb);
     mgrowth=S(1,1);
     if iflag==1
-      fprintf('Maximum growth in energy:  %e \n',mgrowth);
+      fprintf('Maximum growth in energy:  %e at frequency %e\n',mgrowth, ommax);
     else
       fprintf('Growth in energy at omega %e:  %e \n',ommax,mgrowth);
     end
