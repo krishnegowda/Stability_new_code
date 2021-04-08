@@ -17,7 +17,7 @@ omega=[-.05 0.35];
 %%% blasius specific parameters
 ylen=30;
 m=0;
-Nprof=160; Lprof=70;
+Nprof=100; Lprof=70;
 %%% general variables
 R=550;
 nosmod=150;
