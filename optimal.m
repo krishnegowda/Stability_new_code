@@ -138,8 +138,13 @@ function [flowin,flowot,gg]=optimal(A,T,M,ak2,iflag,imaglow);
       gg(i,5) = (flow2'*M*flow2) / (flowin'*M*flowin);
     end 
     
-
-
+F = inv(invF);
+[nrr, nri] = nrange(1i*qb, 500);
+figure(50); plot(real(eu), imag(eu), 'k+'); hold on;
+plot(nrr, nri, 'r');
+plot([-100, 100], [0, 0], 'k');
+hold off;
+xlim([-0.1+min(nrr), 0.1+max(nrr)]);
 
 
 
