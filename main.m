@@ -27,7 +27,8 @@ close all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %params_poiseuille;
-params_blasius;
+%params_blasius;
+params_blasius_liftup;
 
 k2=alpha^2+beta^2;
 
